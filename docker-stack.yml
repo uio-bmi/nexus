@@ -4,6 +4,7 @@ services:
 
   nexus:
     image: sonatype/nexus3
+    hostname: nexus
     volumes:
       - /nexus:/nexus-data
     deploy:
@@ -16,6 +17,7 @@ services:
 
   nginx:
     image: nginx
+    hostname: nginx
     ports:
       - 80:80
       - 443:443
