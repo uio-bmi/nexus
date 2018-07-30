@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+
+  nexus:
+    image: sonatype/nexus3
+    volumes:
+      - /nexus:/nexus-data
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 120s
+    depends_on:
+      - nginx
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/nexus.norgene.no/:/etc/letsencrypt/live/nexus.norgene.no/
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 120s
